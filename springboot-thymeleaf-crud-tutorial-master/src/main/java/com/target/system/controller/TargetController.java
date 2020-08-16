@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.target.system.repository.TargetRepository;
 
+import java.util.*;
+
 @Controller
 @RequestMapping("/targets/")
 public class TargetController {
@@ -75,5 +77,25 @@ public class TargetController {
 		targetRepository.delete(targetModel);
 		model.addAttribute("targets", targetRepository.findAll());
 		return "index";
+	}
+
+	@GetMapping("viewtargets")
+	public String Alltargets(Model model) {
+//		model.addAttribute("targets", targetRepository.findAll());
+//		return "view-targets";
+		List<TargetModel> targetModel = (List<TargetModel>) targetRepository.findAll();
+
+		Map<String, String> tf = new HashMap<>();
+
+		for (TargetModel reqModel : targetModel){
+
+			String Value = reqModel.getCaseNumber() + "-" + reqModel.getDescription();
+			String Value1 = reqModel.getUserID();
+			tf.put(Value1,Value);
+
+		}
+
+		model.addAttribute("targets", tf);
+		return "view-targets";
 	}
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.target.system.repository.TargetRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/targets/")
@@ -81,21 +82,17 @@ public class TargetController {
 
 	@GetMapping("viewtargets")
 	public String Alltargets(Model model) {
-//		model.addAttribute("targets", targetRepository.findAll());
-//		return "view-targets";
 		List<TargetModel> targetModel = (List<TargetModel>) targetRepository.findAll();
 
-		Map<String, String> tf = new HashMap<>();
+		Map<String, List<TargetModel>> map = targetModel.stream()
+				.collect(Collectors.groupingBy(TargetModel::getUserID));
 
-		for (TargetModel reqModel : targetModel){
+		Map<String, List<String>> map1 = new HashMap<>();
+		map.keySet().stream().forEach(t -> {
+			map1.put(t,	map.get(t).stream().map(s -> s.getCaseNumber().toString() + " - " + s.getDescription().toString()).collect(Collectors.toList()));
+		});
 
-			String Value = reqModel.getCaseNumber() + "-" + reqModel.getDescription();
-			String Value1 = reqModel.getUserID();
-			tf.put(Value1,Value);
-
-		}
-
-		model.addAttribute("targets", tf);
+		model.addAttribute("targets", map1);
 		return "view-targets";
 	}
 }

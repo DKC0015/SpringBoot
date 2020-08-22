@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Users</title>
+    <title>View-Targets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -16,48 +16,29 @@
     <!-- <link rel="stylesheet" href="../css/shards.min.css"> -->
 </head>
 <body>
+<div class="container my-5">
+    <h2 class="text-center">Morning Target Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-10">
 <div class="col-md-10">
     <div th:switch="${targets}" class="container my-5">
     <h2 th:case="null">No Tergets yet!</h2>
     <div th:case="*">
-<!--        <table class="table table-striped table-responsive-md">-->
-<!--            <thead>-->
-<!--            <tr th:each="target : ${targets}">-->
-<!--                <span th:if="${targets.userID != targets.userID}">Female</span>-->
-<!--                <td th:text="${target.userID}"></td>-->
-<!--            </tr>-->
-
-<!--            <tbody>-->
-<!--            <tr th:each="target : ${targets}">-->
-<!--                <td th:text="|${target.caseNumber} - ${target.description}|"></td>-->
-<!--            </tr>-->
-<!--            </th>-->
-<!--            </tbody>-->
-<!--            </thead>-->
-<!--        </table>-->
 
             <div th:each="mapEntry : ${targets}">
                 <span th:text="${mapEntry.key}"></span>
                 <br>
-                <span th:text="${mapEntry.value}"></span>
-                <br>
+                <div th:each="m : ${mapEntry.value}">
+                <span strong th:text="${m}"></span>
+                </div>
                 <br>
             </div>
-
-<!--        <table>-->
-<!--            <tr th:each="element : ${catsAndItems}">-->
-<!--                <td th:text="${element.key}">keyvalue</td>-->
-<!--                <table>-->
-<!--                    <tr th:each="anews : ${element.value}">-->
-<!--                        <td th:text="${anews.title}">Some name</td>-->
-<!--                        <td th:text="${anews.description}">Some name</td>-->
-<!--                        <td th:text="${anews.url}">Some name</td>-->
-<!--                        <td th:text="${anews.logo}">Some name</td>-->
-<!--                        <td th:text="${anews.collectionDate}">Some name</td>-->
-<!--                    </tr>-->
-<!--                </table>-->
-<!--            </tr>-->
     </div>
+    </div>
+</div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
